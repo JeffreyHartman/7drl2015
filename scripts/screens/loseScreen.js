@@ -4,7 +4,7 @@ var loseScreen = function() {
 }
 
 loseScreen.prototype.render = function() {
-	Game.display.drawText(1,1, "%c{red}You were eaten by a grue. Try again?");
+	Game.display.drawText(1,1, "%c{red}You were eaten by a zombie. Try again?");
 	Game.display.drawText(1,2, "Press [Enter] to return to the menu");
 }
 

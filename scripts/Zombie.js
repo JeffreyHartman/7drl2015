@@ -14,10 +14,15 @@ Zombie.prototype.act = function() {
     Game.display.draw(this._x, this._y, glyph.getChar(), glyph.getForeground(), glyph.getBackground);
     var playerX = Game.player.getX();
     var playerY = Game.player.getY();
-    var passableCallback = function(playerX, playerY) {
-        var g = Game.map[playerX+','+playerY].getGlyph();
-        return g.isPassable();
-        //return (playerX+','+playerY in Game.map);
+    var passableCallback = function(x, y) {
+        var key = x+','+y;
+        if (key in Game.map) {
+            var g = Game.map[key].getGlyph();
+            return g.isPassable();
+        }
+        else {
+            return false;
+        }
     }
     
     var astar = new ROT.Path.AStar(playerX, playerY, passableCallback, {topology:4});
