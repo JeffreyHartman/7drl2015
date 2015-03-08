@@ -13,8 +13,8 @@ var startScreen = function() {
 }
 
 startScreen.prototype.render = function() {
-	Game.display.drawText(1,1, "%c{yellow}rot.js Roguelike");
-	Game.display.drawText(1,2, "Press [Enter] to start!");
+	Game.display.drawText(1,1, "%c{yellow}Fucking Zombies!!!!!");
+	Game.display.drawText(1,2, "Press [Enter] to start killing some zombies! User arrow keys for movement! There are no zombies!");
 }
 
 startScreen.prototype.handleInput = function(inputType, inputData) {

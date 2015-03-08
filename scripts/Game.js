@@ -13,7 +13,8 @@ var Game = {
     treasure: null,
     monster: null,
     player: null,
-    engine: null,     
+    engine: null,
+    //map_size: (100, 30),
 
     init: function() {        
         // use rot.js to make a display object for the game
@@ -61,4 +62,4 @@ var Game = {
         });
     }
 
-};  
+};
