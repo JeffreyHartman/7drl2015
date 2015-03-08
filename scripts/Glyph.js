@@ -1,7 +1,8 @@
-var Glyph = function(chr, foreground, background) {
+var Glyph = function(chr, foreground, background, passable) {
 	this._char = chr || ' ';
 	this._foreground = foreground | 'white';
 	this._background = background | 'black';
+	this._passable = passable | false;
 }
 
 Glyph.prototype.getChar = function() {
@@ -14,4 +15,8 @@ Glyph.prototype.getBackground = function() {
 
 Glyph.prototype.getForeground = function() {
 	return this._foreground;
+}
+
+Glyph.prototype.isPassable = function() {
+	return this._passable;
 }

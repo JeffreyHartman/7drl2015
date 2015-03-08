@@ -11,16 +11,17 @@ var Game = {
     player: null,
     map: {},
     treasure: null,
-    monster: null,
+    zombies: [],
     player: null,
     engine: null,
+    scheduler: null,
     //map_size: (100, 30),
 
     init: function() {        
         // use rot.js to make a display object for the game
         this.display = new ROT.Display(this.options);
         // append the display to the page!
-        document.body.appendChild(this.display.getContainer());        
+        document.body.appendChild(this.display.getContainer());
         
         // initial resize
         this._resize();
@@ -30,10 +31,10 @@ var Game = {
 
         // bind key events
         this.bindEventToScreen('keydown');
-        this.bindEventToScreen('keyup');
-        this.bindEventToScreen('keypress');
+        //this.bindEventToScreen('keyup');
+        //this.bindEventToScreen('keypress');
 
-        this.switchScreen(new startScreen());        
+        this.switchScreen(new startScreen());
     },    
     /* TODO: implement some resizing of the font to make the game fit on smaller screen */
     _resize: function() {        

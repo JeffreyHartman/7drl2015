@@ -6,6 +6,7 @@ var startScreen = function() {
     Game.monster = null;
     Game.player = null;
     Game.engine = null;
+    Game.scheduler = null;
 
 	console.log("Entered the start screen");
 	Game.display.clear();

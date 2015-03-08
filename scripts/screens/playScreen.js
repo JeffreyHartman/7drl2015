@@ -7,11 +7,11 @@ var playScreen = function() {
 playScreen.prototype.render = function() {
     this._loadmap();
     // use rot.js simple scheduler for round robin turns
-    var scheduler = new ROT.Scheduler.Simple();
+    Game.scheduler = new ROT.Scheduler.Simple();
     // add player to the scheduler, true sets it as recurring
-    scheduler.add(Game.player, true);    
+    Game.scheduler.add(Game.player, true);
     // create rot.js engine, which takes care of the main game loop and needs a scheduler object
-    Game.engine = new ROT.Engine(scheduler);
+    Game.engine = new ROT.Engine(Game.scheduler);
     // lets get this shit started
     Game.engine.start();
 }
@@ -19,7 +19,7 @@ playScreen.prototype.render = function() {
 playScreen.prototype._loadmap = function() {
     var levelText = '';
     var xhr = new XMLHttpRequest();
-    xhr.open('get', './levels/smallhouse.txt', true);
+    xhr.open('get', './levels/smallhouse.txt', false);
     xhr.onreadystatechange = buildMapObject;
     xhr.send();
 
@@ -39,7 +39,7 @@ playScreen.prototype._loadmap = function() {
         }
     }
 
-    /* This is terrible code, have pity on me */
+    /* This is terrible code */
     function assignTile(chr) {
         switch(chr) {
             case '=':
@@ -73,8 +73,16 @@ playScreen.prototype._loadmap = function() {
     }   
 }
 
+playScreen.prototype._spawnZombies = function() {
+    var z = new Zombie(0,0);
+    Game.zombies.push(z);
+    Game.scheduler.add(z, true);
+}
+
 playScreen.prototype.handleInput = function(inputType, e) {
 	if (inputType === 'keydown') {
-		Game.player.handleEvent(e);
+		if (e.keyCode === ROT.VK_RETURN) {
+            this._spawnZombies();
+        }
 	}
 }

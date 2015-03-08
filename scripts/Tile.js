@@ -7,6 +7,6 @@ Tile.prototype.getGlyph = function() {
 }
 
 Tile.Null = new Tile(new Glyph());
-Tile.Floor = new Tile(new Glyph('.'));
+Tile.Floor = new Tile(new Glyph('.', 'lightgray', null, true));
 Tile.WallVertical = new Tile(new Glyph('|', 'brown'));
 Tile.WallHorizontal = new Tile(new Glyph('=', 'brown'));
