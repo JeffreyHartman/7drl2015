@@ -7,7 +7,7 @@ var playScreen = function() {
 playScreen.prototype.render = function() {
     this._loadmap();
     // use rot.js simple scheduler for round robin turns
-    Game.scheduler = new ROT.Scheduler.Simple();
+    Game.scheduler = new ROT.Scheduler.Speed();
     // add player to the scheduler, true sets it as recurring
     Game.scheduler.add(Game.player, true);
     // create rot.js engine, which takes care of the main game loop and needs a scheduler object
@@ -32,7 +32,7 @@ playScreen.prototype._loadmap = function() {
                     var key = x+','+y;
                     Game.map[key] = assignTile(levelText[y][x]);
                     if (levelText[y][x] == '@')
-                        Game.player = new Player(x,y);
+                        Game.player = new Player(x,y,100);
                 }
             }
             drawWholeMap();
@@ -74,7 +74,7 @@ playScreen.prototype._loadmap = function() {
 }
 
 playScreen.prototype._spawnZombies = function() {
-    var z = new Zombie(0,0);
+    var z = new Zombie(0,0,50);
     Game.zombies.push(z);
     Game.scheduler.add(z, true);
 }

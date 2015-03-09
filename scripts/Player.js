@@ -1,6 +1,7 @@
-var Player = function(x,y) {
+var Player = function(x,y,speed) {
     this._x = x;
     this._y = y;
+    this._speed = speed;
     // call _draw when Player gets created    
 };
 
@@ -60,4 +61,5 @@ Player.prototype.handleEvent = function(e) {
 
 Player.prototype.getX = function() { return this._x; }
 Player.prototype.getY = function() { return this._y; }
+Player.prototype.getSpeed = function() { return this._speed; }
 

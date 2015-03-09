@@ -1,6 +1,7 @@
-var Zombie = function(x, y) {
+var Zombie = function(x, y,speed) {
     this._x = x;
     this._y = y;
+    this._speed = speed;
     this._draw();
 }
 
@@ -47,3 +48,5 @@ Zombie.prototype.act = function() {
         this._draw();
     }
 }
+
+Zombie.prototype.getSpeed = function() { return this._speed; }

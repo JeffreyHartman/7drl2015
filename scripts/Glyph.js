@@ -10,7 +10,7 @@ Glyph.prototype.getChar = function() {
 }
 
 Glyph.prototype.getBackground = function() {
-	return this._bakcground;
+	return this._background;
 }
 
 Glyph.prototype.getForeground = function() {

@@ -14,8 +14,8 @@ var startScreen = function() {
 }
 
 startScreen.prototype.render = function() {
-	Game.display.drawText(1,1, "%c{yellow}Fucking Zombies!!!!!");
-	Game.display.drawText(1,2, "Press [Enter] to start killing some zombies! User arrow keys for movement! There are no zombies!");
+	Game.display.drawText(1,1, "%c{yellow}The Science Experiment Gone Wrong Game");
+	Game.display.drawText(1,2, "Press [Enter] to start killing some zombies! User arrow keys for movement! You can't actually kill zombies yet...");
 }
 
 startScreen.prototype.handleInput = function(inputType, inputData) {
