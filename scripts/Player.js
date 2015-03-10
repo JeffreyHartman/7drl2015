@@ -43,20 +43,22 @@ Player.prototype.handleEvent = function(e) {
     
     var currentKey = this._x+','+this._y;
     var newKey = newX + "," + newY;
-    if( Game.map[newKey] == Tile.WallVertical ||
-        Game.map[newKey] == Tile.WallHorizontal ||
-        Game.map[newKey] == Tile.Null ||
-        Game.map[newKey] == undefined ) {
+    var glyph = Game.map[newKey].getGlyph();
+    if (!glyph.isPassable()) { // wall or something, can't move here
             return;
-    } // cannot move in this direction
-    
-    var glyph = Game.map[currentKey].getGlyph();
-    Game.display.draw(this._x, this._y, glyph.getChar(), glyph.getForeground(), glyph.getBackground());
-    this._x = newX;
-    this._y = newY;
-    this.draw();
-    window.removeEventListener("keydown", this);
-    Game.engine.unlock();
+    } else if (newKey in Game.zombies) { // kill it!
+        //TODO: implement attacking
+        console.log('fake attack!');
+        Game.engine.unlock();
+    } else { // move there
+        var glyph = Game.map[currentKey].getGlyph();
+        Game.display.draw(this._x, this._y, glyph.getChar(), glyph.getForeground(), glyph.getBackground());
+        this._x = newX;
+        this._y = newY;
+        this.draw();
+        window.removeEventListener("keydown", this);
+        Game.engine.unlock();
+    }
 };
 
 Player.prototype.getX = function() { return this._x; }

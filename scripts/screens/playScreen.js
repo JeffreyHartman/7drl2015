@@ -75,7 +75,6 @@ playScreen.prototype._loadmap = function() {
 
 playScreen.prototype._spawnZombies = function() {
     var z = new Zombie(0,0,50);
-    Game.zombies.push(z);
     Game.scheduler.add(z, true);
 }
 
