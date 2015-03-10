@@ -3,21 +3,20 @@ var Zombie = function(x, y,speed) {
     this._y = y;
     this._speed = speed;
     this._draw();
+    this._updateEntityPosition(this);
 }
 
 Zombie.prototype._draw = function() {
     Game.display.draw(this._x, this._y, "z", "red");
-    Game.zombies[this._x+','+this._y] = this;
 }
 
 Zombie.prototype.act = function() {
     var currentKey = this._x+','+this._y;
-    delete Game.zombies[currentKey];
     var playerX = Game.player.getX();
     var playerY = Game.player.getY();
     var passableCallback = function(x, y) {
         var key = x+','+y;
-        if (!(key in Game.zombies) && key in Game.map) {
+        if (key in Game.map) { /* why is checking if the damn key in the entities table here breaking the fucking game? */
             var g = Game.map[key].getGlyph();
             return g.isPassable();
         }
@@ -40,11 +39,15 @@ Zombie.prototype.act = function() {
     } else {
         x = path[0][0];
         y = path[0][1];
+        /* HAX! Checking if spot occupied in the passable callback breaks the fucking game, so we'll just skip the zombies turn instead.
+         Bonus simulates how dumb zombies are? Yeah, thats it. Totally a feature, not a bug */
+        if (Game.entities[x+','+y]) return; 
         var glyph = Game.map[currentKey].getGlyph();
         Game.display.draw(this._x, this._y, glyph.getChar(), glyph.getForeground(), glyph.getBackground());
         this._x = x;
         this._y = y;
         this._draw();
+        this._updateEntityPosition(this, currentKey);
     }
 }
 
@@ -53,4 +56,20 @@ Zombie.prototype._attack = function() {
     console.log('pretend Im eating your brains right now');
 }
 
+Zombie.prototype._updateEntityPosition = function(entity, oldKey) {
+    if (oldKey) {
+        if (Game.entities[oldKey] == entity) {
+            delete Game.entities[oldKey];
+        }
+    }
+
+    var key = entity.getX() + ',' + entity.getY();
+    if (Game.entities[key]) {
+        return;
+    }
+    Game.entities[key] = entity;
+}
+
+Zombie.prototype.getX = function() { return this._x; }
+Zombie.prototype.getY = function() { return this._y; }
 Zombie.prototype.getSpeed = function() { return this._speed; }

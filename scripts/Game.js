@@ -11,7 +11,7 @@ var Game = {
     player: null,
     map: {},
     treasure: null,
-    zombies: {},
+    entities: {},
     player: null,
     engine: null,
     scheduler: null,

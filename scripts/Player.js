@@ -43,10 +43,11 @@ Player.prototype.handleEvent = function(e) {
     
     var currentKey = this._x+','+this._y;
     var newKey = newX + "," + newY;
+    if (!(newKey in Game.map)) { return; }
     var glyph = Game.map[newKey].getGlyph();
     if (!glyph.isPassable()) { // wall or something, can't move here
             return;
-    } else if (newKey in Game.zombies) { // kill it!
+    } else if (newKey in Game.entities) { // kill it!
         //TODO: implement attacking
         console.log('fake attack!');
         Game.engine.unlock();
