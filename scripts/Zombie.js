@@ -53,7 +53,7 @@ Zombie.prototype.act = function() {
 
 Zombie.prototype._attack = function() {
     // TODO: implement zombie brain eating
-    console.log('pretend Im eating your brains right now');
+    Game.switchScreen(new loseScreen());
 }
 
 Zombie.prototype._updateEntityPosition = function(entity, oldKey) {
@@ -70,6 +70,16 @@ Zombie.prototype._updateEntityPosition = function(entity, oldKey) {
     Game.entities[key] = entity;
 }
 
+Zombie.prototype.destroy = function() {
+    console.log('Is dead zombie a redundant term?');
+    var key = this.getKey();
+    delete Game.entities[key];
+    Game.scheduler.remove(this);
+    var glyph = Game.map[key].getGlyph();
+    Game.display.draw(this._x, this._y, glyph.getChar(), glyph.getForeground(), glyph.getBackground());
+}
+
 Zombie.prototype.getX = function() { return this._x; }
 Zombie.prototype.getY = function() { return this._y; }
+Zombie.prototype.getKey = function() { return this._x + ',' + this._y; }
 Zombie.prototype.getSpeed = function() { return this._speed; }

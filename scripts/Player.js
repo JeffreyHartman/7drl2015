@@ -49,7 +49,7 @@ Player.prototype.handleEvent = function(e) {
             return;
     } else if (newKey in Game.entities) { // kill it!
         //TODO: implement attacking
-        console.log('fake attack!');
+        this._attack(Game.entities[newKey]);
         Game.engine.unlock();
     } else { // move there
         var glyph = Game.map[currentKey].getGlyph();
@@ -61,6 +61,10 @@ Player.prototype.handleEvent = function(e) {
         Game.engine.unlock();
     }
 };
+
+Player.prototype._attack = function(entity) {
+    entity.destroy();
+}
 
 Player.prototype.getX = function() { return this._x; }
 Player.prototype.getY = function() { return this._y; }
