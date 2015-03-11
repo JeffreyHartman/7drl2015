@@ -1,9 +1,9 @@
 var loseScreen = function() {
 	console.log("Entered the lose screen");
-	this.render();
+	this.init();
 }
 
-loseScreen.prototype.render = function() {
+loseScreen.prototype.init = function() {
 	Game.display.drawText(1,1, "%c{red}You were eaten by a zombie. Try again?");
 	Game.display.drawText(1,2, "Press [Enter] to return to the menu");
 }

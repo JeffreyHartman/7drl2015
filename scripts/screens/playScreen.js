@@ -1,12 +1,24 @@
 var playScreen = function() {
-    console.log("Entered the play screen");
+    this.centerX = 0;
+    this.centerY = 0;
+    /* TODO: Map stuff needs refactored into it's own object */
+    this.mapWidth = 0;
+    this.mapHeight = 0;
     Game.display.clear();
-    this.render();
+    this.init();
 }
 
-playScreen.prototype.render = function() {
+playScreen.prototype.getWidth = function() {
+    return this.mapWidth;
+}
+
+playScreen.prototype.getHeight = function() {
+    return this.mapHeight;
+}
+
+playScreen.prototype.init = function() {
     this._loadmap();
-    // use rot.js simple scheduler for round robin turns
+    // use rot.js speed scheduler so we can have slow zombies
     Game.scheduler = new ROT.Scheduler.Speed();
     // add player to the scheduler, true sets it as recurring
     Game.scheduler.add(Game.player, true);
@@ -16,10 +28,14 @@ playScreen.prototype.render = function() {
     Game.engine.start();
 }
 
+playScreen.prototype.render = function() {
+    
+}
+
 playScreen.prototype._loadmap = function() {
     var levelText = '';
     var xhr = new XMLHttpRequest();
-    xhr.open('get', './levels/smallhouse.txt', false);
+    xhr.open('get', './levels/biggerhouse.txt', false);
     xhr.onreadystatechange = buildMapObject;
     xhr.send();
 
@@ -31,8 +47,11 @@ playScreen.prototype._loadmap = function() {
                 for (x = 0; x < levelText[0].length; x++) {
                     var key = x+','+y;
                     Game.map[key] = assignTile(levelText[y][x]);
-                    if (levelText[y][x] == '@')
+                    if (levelText[y][x] == '@') {
                         Game.player = new Player(x,y,100);
+                        //this.centerX = x;
+                        //this.centerY = y;
+                    }
                 }
             }
             drawWholeMap();

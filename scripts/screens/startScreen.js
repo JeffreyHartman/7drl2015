@@ -10,10 +10,10 @@ var startScreen = function() {
 
 	console.log("Entered the start screen");
 	Game.display.clear();
-	this.render();
+	this.init();
 }
 
-startScreen.prototype.render = function() {
+startScreen.prototype.init = function() {
 	Game.display.drawText(1,1, "%c{yellow}The Science Experiment Gone Wrong Game");
 	Game.display.drawText(1,2, "Press [Enter] to start killing some zombies! User arrow keys for movement! You can't actually kill zombies yet...");
 }

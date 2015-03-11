@@ -1,13 +1,10 @@
 var Game = {
     options: {
-        fontSize: 28,
         fontFamily: "droid sans mono, monospace",
-        spacing: 1.1,
-        width: 1,
-        height: 1
+        spacing: 1.1
     },   
     display: null,
-    _currentScreen: null,
+    currentScreen: null,
     player: null,
     map: {},
     treasure: null,
@@ -15,9 +12,8 @@ var Game = {
     player: null,
     engine: null,
     scheduler: null,
-    //map_size: (100, 30),
 
-    init: function() {        
+    init: function() {
         // use rot.js to make a display object for the game
         this.display = new ROT.Display(this.options);
         // append the display to the page!
@@ -29,17 +25,18 @@ var Game = {
         // call resize every time the window is resized
         window.addEventListener("resize", this._resize.bind(this));
 
-        // bind key events
         this.bindEventToScreen('keydown');
-        //this.bindEventToScreen('keyup');
-        //this.bindEventToScreen('keypress');
 
         this.switchScreen(new startScreen());
-    },    
-    /* TODO: implement some resizing of the font to make the game fit on smaller screen */
-    _resize: function() {        
-        var size = this.display.computeSize(window.innerWidth, window.innerHeight);
-        this.display.setOptions({width:size[0], height:size[1]});
+    },
+    
+    _resize: function() {
+        var w = window.innerWidth;
+        var h = window.innerHeight;
+        var size = this.display.computeSize(w, h);
+        var fontSize = this.display.computeFontSize(w, h);
+
+        this.display.setOptions({ fontSize:fontSize, width:size[0], height:size[1] });
     },
 
     switchScreen: function(screen) {
@@ -48,19 +45,25 @@ var Game = {
         this.display.clear();
 
         // update the current screen and notify it we've entered, then render it
-        this._currentScreen = screen;
-        if (!this._currentScreen != null) {            
-            this._currentScreen.render();
+        this.currentScreen = screen;
+        if (!this.currentScreen != null) {
+            this.currentScreen.init();
         }
     },
 
     bindEventToScreen: function(event) {
         window.addEventListener(event, function(e) {
-            if (Game._currentScreen != null) {
+            if (Game.currentScreen != null) {
                 // let each screen handle the input
-                Game._currentScreen.handleInput(event, e);
+                Game.currentScreen.handleInput(event, e);
             }
         });
+    },
+
+    getWidth: function() {
+        var options = this.display.getOptions();
+        var width = options['width'];
+        return width;
     }
 
 };
